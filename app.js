@@ -20,12 +20,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 var app = express();
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../index.html'));
-    console.log(path.join(__dirname, '../index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
+    console.log(path.join(__dirname, 'index.html'));
 });
 app.use('/src/:id', function (req, res) {
-    res.sendFile(path.join(__dirname, req.params.id));
-    console.log(path.join(__dirname, req.params.id));
+    res.sendFile(path.join(__dirname, '/src/' + req.params.id));
+    console.log(path.join(__dirname, '/src/' + req.params.id));
 });
 app.use('/read/:id', function (req, res) {
     var ms = new MyService(driver);
