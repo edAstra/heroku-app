@@ -14,27 +14,26 @@
          
          <header>
             <div>
-               <h1>Deployed to Heroku</h1>
+               <h1>edAstra Knowledge Graph</h1>
             </div>
          </header>
          <article id="block1" class="module-block">
             <img class="right" src="http://placehold.it/150"/>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu velit tempus, pulvinar velit eu, laoreet
-               est. Nulla vel massa at mauris pellentesque imperdiet. Donec tempor egestas nisl nec faucibus. Ut congue
-               semper nisl eget lobortis. Aliquam vulputate dolor mi, vitae gravida nunc porta sit amet. Nullam
-               finibus, nisl quis suscipit lacinia, diam justo hendrerit nisl, accumsan sodales risus lacus non quam.
-               Proin dignissim tempor arcu, et aliquam erat accumsan eget.
-            </p>
-            <p>before</p>
-            <p id="query">kgkjgjgj</p>
-            <p>after</p>
+            <p>This web app enables you to query the edAstra knowledge graph.</p>
+            <input type="text" placeholder="Node name" id="myInput">
+            <button type="button" onclick="getInputValue();">Get Connecting Nodes</button>
             <ul class="social">
-               <li><a href="https://www.positronx.io/free-angular-tutorials/">Angular Tutorials</a></li>
-               <li><a href="https://www.positronx.io/">positronX.IO - Software Development Resources</a></li>
+               <li><a href="https://github.com/edAstra">edAstra Github</a></li>
+               <li><a href="http://wikilearn.network/">wikiLearn network</a></li>
             </ul>
-            <button id="myButton">This Button :)</button>
-            <script src="src/button.js"></script>
-            <p><a href="/read/this">this link</a><p>
+            
+            <script>
+               function getInputValue(){
+                  // Selecting the input element and get its value 
+                  var inputVal = document.getElementById("myInput").value;
+                  location.href = '/read/'+inputVal;
+               }
+            </script>
          </article>
       </section>
       <!-- page-wrap -->
