@@ -39,6 +39,10 @@ app.use('/read/:id', function (req, res) {
      res.send(records)
     })
 });
+app.use('/images/:id', function (req, res) {
+    res.sendFile(path.join(__dirname, '/images/' + req.params.id));
+    console.log(path.join(__dirname, '/images/' + req.params.id));
+});
 app.listen(process.env.PORT || 4000, function () {
     console.log('Node app is working!');
 });
