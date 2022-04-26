@@ -1,7 +1,6 @@
 {
   "name": "node-app-heroku",
   "version": "1.0.0",
-  "type": "module",
   "description": "This app pulls data from the edAstra neo4J database and plots it with plotly.",
   "main": "index.js",
   "scripts": {

@@ -3,12 +3,12 @@
  */
 // tag::import[]
 // Import the neo4j dependency from neo4j-driver
-import neo4j from 'neo4j-driver'
+const neo4j = require('neo4j-driver')
 // end::import[]
 
-import express from 'express'
-import path from 'path'
-import {fileURLToPath} from 'url'
+const express = require('express')
+const path = require('path')
+//const {fileURLToPath} = require('url')
 
 const username = 'neo4j'
 const password = 'bSsQ-_vuA9R0Yc73QlVsjztvcAMHZHCLHFsCAe4YCxY'
@@ -16,8 +16,8 @@ const connectionString = 'neo4j+s://9c453c0d.databases.neo4j.io'
 const driver = neo4j.driver(connectionString,
   neo4j.auth.basic(username, password))
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+//const __filename = fileURLToPath(import.meta.url);
+//const __dirname = path.dirname(__filename);
 var app = express();
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
@@ -30,12 +30,13 @@ app.use('/src/:id', function (req, res) {
 app.use('/read/:id', function (req, res) {
     var ms = new MyService(driver);
     console.log(path.join(__dirname, req.params.id));
-    //console.log(ms.method())
-    var happy = ms.method()
-    console.log(happy)
-    return happy.then(function(result) {
-     console.log(result['records'])
-     return result['records']
+    ms.method(req.params.id).then(function(result) {
+     const records = []
+     for (rec of result['records']){
+        records.push(rec['_fields'][0]['properties']['name'])
+    }
+     console.log(records)
+     res.send(records)
     })
 });
 app.listen(process.env.PORT || 4000, function () {
@@ -114,7 +115,7 @@ class MyService {
     this.driver = driver
   }
 
-  method() {
+  method(id) {
     // tag::session[]
     // Open a new session
     const session = this.driver.session()
@@ -123,9 +124,9 @@ class MyService {
     const res = session.readTransaction(tx => {
       console.log('Reading')
       return tx.run(
-        `MATCH (n)
-        RETURN n.name AS name
-        LIMIT 10` // <2>
+        `MATCH (n)--(k) WHERE n.name = $name
+        RETURN k
+        LIMIT 50`,{name: id} // <2>
       )
     })
 
