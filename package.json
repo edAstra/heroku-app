@@ -1,10 +1,11 @@
 {
   "name": "node-app-heroku",
   "version": "1.0.0",
+  "type": "module",
   "description": "This app pulls data from the edAstra neo4J database and plots it with plotly.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js"
   },
   "keywords": [
     "edAstra"
@@ -12,10 +13,7 @@
   "author": "KGM",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.3"
-  },
-  "scripts": {
-    "start": "node app.js"
+    "express": "^4.17.3",
+    "neo4j-driver": "^4.4.5"
   }
-
 }
