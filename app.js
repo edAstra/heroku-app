@@ -143,7 +143,7 @@ class MyService {
     // Do something with the session...
 
     // Close the session
-    session.close()
+    //session.close()
   }
 }
 
