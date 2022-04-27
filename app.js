@@ -31,13 +31,11 @@ app.use('/read/:id', function (req, res) {
     var ms = new MyService(driver);
     console.log(path.join(__dirname, req.params.id));
     ms.method(req.params.id).then(function(result) {
-     //const records = []
-     //for (rec of result['records']){
-     //   records.push(rec['_fields'][0]['properties']['name'])
-     console.log(result)
-     res.send(result)
-     //console.log(records)
-     //res.send(records)
+     const records = []
+     for (rec of result['records']){
+        records.push(rec['_fields'][0]['properties'])}
+     console.log(records)
+     res.send(records)
     })
 });
 app.use('/images/:id', function (req, res) {
