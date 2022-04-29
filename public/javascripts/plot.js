@@ -20,7 +20,7 @@ function getInputValue(){
 	    pad: 4
 	  }
     }
-  
+  	document.getElementById("myDiv").innerHTML = "";
     Plotly.newPlot('myDiv', data, layout);
   }
 }
