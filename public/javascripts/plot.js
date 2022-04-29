@@ -9,9 +9,9 @@ function getInputValue(){
 	  json => plot(json) // Handle here
 	);
 
-  function plot(trace){
-    var data = [trace]
+  function plot(data){
     var layout = {
+      showlegend: false,
 	  margin: {
         l: 0,
         r: 0,
