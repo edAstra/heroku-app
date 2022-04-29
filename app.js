@@ -38,6 +38,7 @@ app.use('/public/:id', function (req, res) {
     console.log(path.join(__dirname, '/public/' + req.params.id));
 });
 app.use('/read/:id', function (req, res) {
+    res.set('Access-Control-Allow-Origin', '*');
     var ms = new MyService(driver);
     console.log(path.join(__dirname, req.params.id));
     ms.method(req.params.id).then(function(result) {
