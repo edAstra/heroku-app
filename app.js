@@ -7,8 +7,12 @@ const neo4j = require('neo4j-driver')
 // end::import[]
 
 const express = require('express')
+const app = express();
+app.set('view engine', 'pug');
+
 const path = require('path')
-//const {fileURLToPath} = require('url')
+
+var plotly = require('plotly')("KGMenear", "E8pjs60UTYzCl0E4SJNG")
 
 const username = 'neo4j'
 const password = 'bSsQ-_vuA9R0Yc73QlVsjztvcAMHZHCLHFsCAe4YCxY'
@@ -16,9 +20,8 @@ const connectionString = 'neo4j+s://9c453c0d.databases.neo4j.io'
 const driver = neo4j.driver(connectionString,
   neo4j.auth.basic(username, password))
 
-//const __filename = fileURLToPath(import.meta.url);
-//const __dirname = path.dirname(__filename);
-var app = express();
+app.use(express.static(path.join(__dirname, 'public')))
+
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
     console.log(path.join(__dirname, 'index.html'));
@@ -27,16 +30,61 @@ app.use('/src/:id', function (req, res) {
     res.sendFile(path.join(__dirname, '/src/' + req.params.id));
     console.log(path.join(__dirname, '/src/' + req.params.id));
 });
+app.use('/public/:id', function (req, res) {
+    res.sendFile(path.join(__dirname, '/public/' + req.params.id));
+    console.log(path.join(__dirname, '/public/' + req.params.id));
+});
 app.use('/read/:id', function (req, res) {
     var ms = new MyService(driver);
     console.log(path.join(__dirname, req.params.id));
     ms.method(req.params.id).then(function(result) {
-     const records = []
+     const name = []
+     const x = []
+     const y = []
+     const z = []
      for (rec of result['records']){
-        records.push(rec['_fields'][0]['properties'])}
-     console.log(records)
-     res.send(records)
+        record = rec['_fields'][0]['properties']
+        name.push(record['name'])
+        x.push(record['x'])
+        y.push(record['y'])
+        z.push(record['z'])
+      }
+      var trace = {x:x, y:y, z:z, text:name, 
+        mode: "markers",
+        marker: {
+          color: "rgb(127, 127, 127)",
+          size: 12,
+          symbol: "circle",
+          line: {
+            color: "rgb(204, 204, 204)",
+            width: 1
+          },
+          opacity: 0.9
+        },
+        type: "scatter3d"
+      };
+      var data = [trace];
+      var layout = {margin: {
+        l: 0,
+        r: 0,
+        b: 0,
+        t: 0
+      }};
+      var graphOptions = {layout: layout, filename: "simple-3d-scatter", fileopt: "overwrite"};
+      
+      plotly.plot(data, graphOptions, function (err, msg) {
+        if (err) return console.log(err);
+        console.log(msg);
+      });
+     //console.log(name,x,y,z)
+     res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+     res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+     res.setHeader("Expires", "0"); // Proxies.
+     res.render('index');
+     //res.send(records)
     })
+    
+    //res.render('index');
 });
 app.use('/images/:id', function (req, res) {
     res.sendFile(path.join(__dirname, '/images/' + req.params.id));

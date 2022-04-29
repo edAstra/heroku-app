@@ -1,0 +1,35 @@
+#wrap {
+  width: 750px;
+  height: 1500px;
+  padding: 0;
+  overflow: hidden;
+}
+
+#scaled-frame {
+  width: 900px;
+  height: 800px;
+}
+
+#scaled-frame {
+  zoom: 0.6;
+  -moz-transform: scale(0.6);
+  -moz-transform-origin: 0 0;
+  -o-transform: scale(0.6);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(0.6);
+  -webkit-transform-origin: center 0;
+  margin-left: auto;
+  margin-right: auto;
+  display:  block;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  #scaled-frame {
+    zoom: 1;
+  }
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}

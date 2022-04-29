@@ -1,0 +1,1 @@
+document.getElementById("scaled-frame").contentDocument.location.reload(true);
