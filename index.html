@@ -20,8 +20,6 @@
             </div>
          </header>
          <article id="block1" class="module-block">
-            <img src="/images/graph_7.png" width=20% class="center"/>
-            <p>This web app enables you to query the edAstra knowledge graph.</p>
             <div id='myDiv'></div>
             <input type="text" placeholder="Node name" id="myInput">
             <button type="button" onclick="getInputValue();">Get Connecting Nodes</button>
@@ -31,24 +29,8 @@
                   <li><a href="http://wikilearn.network/">wikiLearn network</a></li>
                </ul>
             </div>  
-            <script>
-               function getInputValue(){
-                  // Selecting the input element and get its value 
-                  var inputVal = document.getElementById("myInput").value;
-                  const url = '/read/'+inputVal;
-            fetch(url, {mode:'cors'})
-              .then(
-                response => response.json()
-              ).then(
-                json => plot(json) // Handle here
-              );
-                
-            function plot(trace){
-              var data = [trace]
-              Plotly.newPlot('myDiv', data);
-            }
-               }
-            </script>
+            <img src="/images/graph_7.png" width=20% class="center"/>
+            <script src="javascripts/plot.js"></script>
             
          </article>
       </section>
