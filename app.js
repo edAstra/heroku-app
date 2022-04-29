@@ -72,16 +72,16 @@ app.use('/read/:id', function (req, res) {
       }};
       var graphOptions = {layout: layout, filename: "simple-3d-scatter", fileopt: "overwrite"};
       
-      plotly.plot(data, graphOptions, function (err, msg) {
-        if (err) return console.log(err);
-        console.log(msg);
-      });
+      //plotly.plot(data, graphOptions, function (err, msg) {
+      //  if (err) return console.log(err);
+      //  console.log(msg);
+      //});
      //console.log(name,x,y,z)
      res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
      res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
      res.setHeader("Expires", "0"); // Proxies.
-     res.render('index');
-     //res.send(records)
+     //res.render('index');
+     res.send(trace)
     })
     
     //res.render('index');
