@@ -13,6 +13,9 @@ app.set('view engine', 'pug');
 const path = require('path')
 
 var plotly = require('plotly')("KGMenear", "E8pjs60UTYzCl0E4SJNG")
+var cors = require('cors')
+
+app.use(cors())
 
 const username = 'neo4j'
 const password = 'bSsQ-_vuA9R0Yc73QlVsjztvcAMHZHCLHFsCAe4YCxY'
