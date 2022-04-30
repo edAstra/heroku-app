@@ -10,17 +10,23 @@ function getInputValue(){
 	);
 
   function plot(data){
-    var layout = {
-      showlegend: false,
-	  margin: {
-        l: 0,
-        r: 0,
-	    b: 10,
-	    t: 10,
-	    pad: 4
-	  }
-    }
-  	document.getElementById("myDiv").innerHTML = "";
-    Plotly.newPlot('myDiv', data, layout);
+  	if(data[0] == "error"){
+  		alert("Knowledge object not found. Please try something new.")
+  		console.log("here")
+  	} else{
+  		console.log("not here")
+	    var layout = {
+	      showlegend: false,
+		  margin: {
+	        l: 0,
+	        r: 0,
+		    b: 10,
+		    t: 10,
+		    pad: 4
+		  }
+	    }
+	  	document.getElementById("myDiv").innerHTML = "";
+	    Plotly.newPlot('myDiv', data, layout);
+	}
   }
 }
