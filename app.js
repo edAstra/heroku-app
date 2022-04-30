@@ -186,7 +186,7 @@ app.use('/read/:id', function (req, res) {
        //res.render('index');*/
        res.send(data)
       } catch(error){
-        res.send(["error"])
+        res.send(["error",req.params.id])
         console.log(error)
       }
     })

@@ -11,7 +11,7 @@ function getInputValue(){
 
   function plot(data){
   	if(data[0] == "error"){
-  		alert("Knowledge object not found. Please try something new.")
+  		alert("We couldn't find " + data[1] + ". Please try something new.")
   		console.log("here")
   	} else{
   		console.log("not here")
