@@ -37,12 +37,11 @@ app.use('/public/:id', function (req, res) {
     res.sendFile(path.join(__dirname, '/public/' + req.params.id));
     console.log(path.join(__dirname, '/public/' + req.params.id));
 });
-app.use('/read/:id', function (req, res) {
+app.use('/read/:name/weight/:weight', function (req, res) {
     res.set('Access-Control-Allow-Origin', '*');
     var dbs = new DBService(driver);
-    console.log(path.join(__dirname, req.params.id));
-
-    dbs.markers_and_lines(req.params.id).then(function(result) {
+    const input = [req.params.name,req.params.weight]
+    dbs.markers_and_lines(input).then(function(result) {
       try{
         const relationships = []
         const node_vectors = {}
@@ -133,7 +132,7 @@ app.use('/read/:id', function (req, res) {
        res.setHeader("Expires", "0"); // Proxies.
        res.send(data)
       } catch(error){
-        res.send(["error",req.params.id])
+        res.send(["error",req.params.name])
         console.log(error)
       }
     })
@@ -172,16 +171,18 @@ class DBService {
     })
   }
 
-  markers_and_lines(id) {
+  markers_and_lines(input) {
     // Open a new session
     const session = this.driver.session()
+    console.log(input[0])
+    console.log(input[1])
 
     const res = session.readTransaction(tx => {
       console.log('Reading')
       return tx.run(
-        `MATCH (n)-[r]-(k)-[s]-(m)-[t]-(n) WHERE n.name = $name AND r.weight > 3 AND s.weight > 3 AND t.weight > 3
+        `MATCH (n)-[r]-(k)-[s]-(m)-[t]-(n) WHERE n.name = $name AND r.weight >= $weight AND s.weight >= $weight AND t.weight >= $weight
         RETURN n,r,k,s,m,t
-        LIMIT 50`,{name: id} // <2>
+        LIMIT 50`,{name: input[0], weight: parseInt(input[1])} // <2>
       )
     })
 

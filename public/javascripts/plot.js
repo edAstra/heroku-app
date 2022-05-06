@@ -1,7 +1,10 @@
 function getInputValue(){
   // Selecting the input element and get its value 
-  var inputVal = document.getElementById("myInput").value;
-  const url = '/read/'+inputVal;
+  var nodeName = document.getElementById("nodeInput").value.toLowerCase()
+  var weight = document.getElementById("weightInput").value.toLowerCase()
+  console.log('node name is '+nodeName)
+  console.log('weight is '+weight)
+  const url = '/read/'+nodeName+'/weight/'+weight;
   fetch(url, {mode:'cors'})
     .then(
       response => response.json()
@@ -11,10 +14,8 @@ function getInputValue(){
 
   function plot(data){
   	if(data[0] == "error"){
-  		alert("We couldn't find " + data[1] + ". Please try something new.")
-  		console.log("here")
+  		alert("Your request for the "+data[1]+" knowledge graph returned no results from the database. Try decreasing the edge weight or trying something new.")
   	} else{
-  		console.log("not here")
 	    var layout = {
 	      showlegend: false,
 		  margin: {
