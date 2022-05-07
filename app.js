@@ -113,11 +113,23 @@ app.use('/read/:name/weight/:weight', function (req, res) {
           z_markers.push(vec['z'])
         }
         
+        const i = name_markers.indexOf(req.params.name)
+
+       
+
         var trace_markers = {
-          x:x_markers, 
-          y:y_markers, 
-          z:z_markers, 
-          text:name_markers, 
+          x:x_markers.filter(function(item) {
+            return x_markers.indexOf(item) !== i
+          }), 
+          y:y_markers.filter(function(item) {
+            return y_markers.indexOf(item) !== i
+          }), 
+          z:z_markers.filter(function(item) {
+            return z_markers.indexOf(item) !== i
+          }), 
+          text:name_markers.filter(function(item) {
+            return item !== req.params.name
+          }), 
           mode: "text+markers",
           marker: {
             color: "rgb(173, 217, 228)",
@@ -127,11 +139,32 @@ app.use('/read/:name/weight/:weight', function (req, res) {
               color: "rgb(91, 151, 166)",
               width: 1
             },
-            opacity: 0.9
+            opacity: 0.8
           },
           type: "scatter3d"
         };
         data.push(trace_markers)
+
+        var trace_main_node = {
+          x:[x_markers[i]], 
+          y:[y_markers[i]], 
+          z:[z_markers[i]], 
+          text:[name_markers[i]], 
+          mode: "text+markers",
+          marker: {
+            color: "rgb(210, 70, 85)",
+            size: 8,
+            symbol: "circle",
+            line: {
+              color: "rgb(210, 70, 85)",
+              width: 1
+            },
+            opacity: 0.9
+          },
+          type: "scatter3d"
+        };
+        data.push(trace_main_node)
+        
 
        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
        res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
