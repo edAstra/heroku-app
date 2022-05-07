@@ -53,20 +53,26 @@ app.use('/read/:name/weight/:weight', function (req, res) {
         node_vectors[identity] = {x:x, y:y, z:z, name:name}
         for (rec of result['records']){
           relationships.push(rec['_fields'][1])
-          relationships.push(rec['_fields'][3])
-          relationships.push(rec['_fields'][5])
+          if (rec['_fields'][3] != null){
+            relationships.push(rec['_fields'][3])
+          }
+          if (rec['_fields'][5] != null){
+            relationships.push(rec['_fields'][5])
+          }
           identity = rec['_fields'][2]['identity']['low']
           x = rec['_fields'][2]['properties']['x']
           y = rec['_fields'][2]['properties']['y']
           z = rec['_fields'][2]['properties']['z']
           name = rec['_fields'][2]['properties']['name']
           node_vectors[identity] = {x:x, y:y, z:z, name:name}
-          identity = rec['_fields'][4]['identity']['low']
-          x = rec['_fields'][4]['properties']['x']
-          y = rec['_fields'][4]['properties']['y']
-          z = rec['_fields'][4]['properties']['z']
-          name = rec['_fields'][4]['properties']['name']
-          node_vectors[identity] = {x:x, y:y, z:z, name:name}
+          if (rec['_fields'][4] != null){
+            identity = rec['_fields'][4]['identity']['low']
+            x = rec['_fields'][4]['properties']['x']
+            y = rec['_fields'][4]['properties']['y']
+            z = rec['_fields'][4]['properties']['z']
+            name = rec['_fields'][4]['properties']['name']
+            node_vectors[identity] = {x:x, y:y, z:z, name:name}
+          }
         }
 
         start_node = []
@@ -180,7 +186,8 @@ class DBService {
     const res = session.readTransaction(tx => {
       console.log('Reading')
       return tx.run(
-        `MATCH (n)-[r]-(k)-[s]-(m)-[t]-(n) WHERE n.name = $name AND r.weight >= $weight AND s.weight >= $weight AND t.weight >= $weight
+        `MATCH (n)-[r]-(k) WHERE n.name = $name AND r.weight >= $weight
+        OPTIONAL MATCH (n)--(k)-[s]-(m)-[t]-(n) WHERE n.name = $name AND s.weight >= $weight AND t.weight >= $weight
         RETURN n,r,k,s,m,t
         LIMIT 50`,{name: input[0], weight: parseInt(input[1])} // <2>
       )

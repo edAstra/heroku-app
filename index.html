@@ -4,6 +4,7 @@
       <meta charset="utf-8">
       <title>edAstra Knowledge Graph</title>
       <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
       <!-- description text that displays below the link in google search results -->
       <meta name="description" content="edAstra Knowledge Graph" />
       <style>
@@ -24,13 +25,15 @@
                <img src="/images/graph_7.png" width=20% class="center"/>
                <br>
             </div>
-            <input type="text" placeholder="Knowledge object (science, philosophy...)" id="nodeInput" size=30>
-            <input type="text" placeholder="Edge weight (1,2,3..)" id="weightInput" size=15>
-            <button type="button" onclick="getInputValue();">Get Knowledge Graph</button>
+            <div class="ui-widget">
+               <input type="text" placeholder="Knowledge object (science, philosophy...)" id="nodeInput" size=30>
+               <input type="text" placeholder="Edge weight (1,2,3..)" id="weightInput" size=15>
+               <button type="button" onclick="getInputValue();">Get Knowledge Graph</button>
+            </div>
             <p>
                <i>Enter a knowledge object and an edge weight and click <strong>Get Knowledge Graph</strong></i>
-               <br>
-               As an example, entering <strong>music</strong> and <strong>3</strong> will return a knowledge graph<br>of all knowledge objects related to <i>music</i> with an edge weight of at least <i>3</i>.
+               <br><br>
+               As an example, entering <strong>music</strong> and <strong>3</strong> will return a knowledge graph of<br>all knowledge objects related to <i>music</i> with an edge weight of at least <i>3</i>.
                <br><br>
             <table>
                <tr>
@@ -70,7 +73,10 @@
                   <li><a href="https://www.youtube.com/channel/UCK1yMoIDqQStGlhYSANYw8g">YouTube</a></li>
                </ul>
             </div> 
+            <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+            <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
             <script src="javascripts/plot.js"></script>
+            <script src="javascripts/autocomplete.js"></script>
             
          </article>
       </section>
